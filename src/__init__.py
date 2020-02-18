@@ -84,7 +84,7 @@ class LPCGDialog(QDialog):
                                 "contents of the poem editor. Continue?")):
             return
         filename = getFile(self, "Import file", None, key="import")
-        if not filename: # canceled
+        if not filename:  # canceled
             return
         with codecs.open(filename, 'r', 'utf-8') as f:
             text = f.read()
@@ -95,6 +95,7 @@ class LPCGDialog(QDialog):
         Generate notes from the given title, tags, poem text, and number of
         lines of context. Return the number of notes added.
         """
+
         def newNote(seq, contexts, line):
             n = Note(self.mw.col, self.mw.col.models.byName(lpcg_models.NAME))
             n.model()['did'] = self.deckChooser.selectedId()
@@ -114,21 +115,23 @@ class LPCGDialog(QDialog):
                 " yet, you can delete the note type in Tools -> Manage"
                 " Note Types and restart Anki to fix this problem."
                 " Otherwise, please add the field back to the note type. "
-                .format(field=str(e), name=lpcg_models.NAME))
+                    .format(field=str(e), name=lpcg_models.NAME))
             return
         # loop for early lines that can't have all the context
-        for seq in range(2, min(lines_of_context+1, len(text)+1)):
-            newNote(seq, ["[Beginning]"] + text[0:seq-1], text[seq-1])
+        for seq in range(2, min(lines_of_context + 1, len(text) + 1)):
+            newNote(seq, ["[Beginning]"] + text[0:seq - 1], text[seq - 1])
         # and for the rest
-        for seq in range(lines_of_context+1, len(text)+1):
-            newNote(seq, text[seq-lines_of_context-1:seq-1], text[seq-1])
+        for seq in range(lines_of_context + 1, len(text) + 1):
+            newNote(seq, text[seq - lines_of_context - 1:seq - 1], text[seq - 1])
         return seq
+
 
 def process_text(string, config):
     """
     Munge raw text from the poem editor into a list of lines that can be
     directly made into notes.
     """
+
     def _normalize_blank_lines(text_lines):
         # remove consecutive lone newlines
         new_text = []
@@ -154,7 +157,7 @@ def process_text(string, config):
     for i in range(len(text)):
         if i == len(text) - 1:
             text[i] += config['endOfTextMarker']
-        elif not text[i+1].strip():
+        elif not text[i + 1].strip():
             text[i] += config['endOfStanzaMarker']
     # entirely remove all blank lines
     text = [i for i in text if i.strip()]
@@ -162,6 +165,7 @@ def process_text(string, config):
     text = [re.sub(r'^<indent>(.*)$', r'<span class="indent">\1</span>', i)
             for i in text]
     return text
+
 
 def ensure_note_type():
     "Create the LPCG note type if it doesn't already exist."
@@ -182,10 +186,12 @@ def ensure_note_type():
     model['sortf'] = lpcg_models.SORT_FIELD
     mm.add(model)
 
+
 def open_dialog():
     "Launch the add-poem dialog."
     dialog = LPCGDialog(aqt.mw)
     dialog.exec_()
+
 
 action = QAction(aqt.mw)
 action.setText("Import &Lyrics/Poetry")
