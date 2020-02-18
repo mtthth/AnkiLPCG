@@ -145,7 +145,7 @@ def process_text(string, config):
 
     text = string.splitlines()
     # record a level of indentation if appropriate
-    text = [re.sub(r'^[ \t]+', r'<indent>', i) for i in text]
+    text = [re.sub(r'^[\t]+', r'<indent>', i) for i in text]
     # remove comments and normalize blank lines
     text = [i.strip() for i in text if not i.startswith("#")]
     text = [re.sub(r'\#.*$', '', i) for i in text]
