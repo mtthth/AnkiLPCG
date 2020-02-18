@@ -146,7 +146,11 @@ def process_text(string, config):
                 del new_text[i]
         return new_text
 
-    text = string.splitlines()
+    lines = string.splitlines()
+    text = []
+    for line in lines:
+        text += line.split('/')
+    text = _normalize_blank_lines(text)
     # record a level of indentation if appropriate
     text = [re.sub(r'^[\t]+', r'<indent>', i) for i in text]
     # remove comments and normalize blank lines
