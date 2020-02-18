@@ -198,7 +198,7 @@ def open_dialog():
 
 
 action = QAction(aqt.mw)
-action.setText("Import &Lyrics/Poetry")
+action.setText("Import &Lyrics/Poetry/Prose")
 aqt.mw.form.menuTools.addAction(action)
 action.triggered.connect(open_dialog)
 
