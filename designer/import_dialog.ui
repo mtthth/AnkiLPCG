@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LPCG – Import Lyrics/Poetry</string>
+   <string>Phemios – Import Lyrics/Poetry/Prose</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
